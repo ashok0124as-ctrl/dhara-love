@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ashok ❤️ Dhara</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  text-align:center;
+  background:black;
+  color:white;
+  overflow:hidden;
+}
+
+/* Password Screen */
+#lockScreen{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:20;
+}
+
+input{
+  padding:10px;
+  font-size:16px;
+  margin:10px;
+  border-radius:5px;
+  border:none;
+}
+
+button{
+  padding:10px 20px;
+  font-size:16px;
+  border:none;
+  border-radius:5px;
+  margin:10px;
+}
+
+#intro{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  font-size:22px;
+  padding:20px;
+  z-index:15;
+}
+
+img{
+  width:80%;
+  max-width:280px;
+  border-radius:20px;
+  margin-top:20px;
+}
+
+.glow{
+  font-size:28px;
+  color:#ff4da6;
+  animation:glow 1.5s infinite alternate;
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 10px #ff4da6;}
+  to{text-shadow:0 0 30px #ff1a75;}
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  pointer-events:none;
+}
+
+.heart,.snow{
+  position:fixed;
+  top:-10px;
+  animation:fall linear infinite;
+}
+
+@keyframes fall{
+  to{transform:translateY(100vh);}
+}
+
+#bigLove{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  font-size:38px;
+  padding:20px;
+  color:#ff1a75;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD LOCK -->
+<div id="lockScreen">
+<h2>Enter Our Princess Name 👶💕</h2>
+<input type="password" id="password" placeholder="Hint: Our Daughter">
+<button onclick="unlock()">Unlock ❤️</button>
+<p id="error" style="color:red;"></p>
+</div>
+
+<!-- Intro -->
+<div id="intro" onclick="startLove()">
+❤️ Tap to Begin Our Love Story ❤️
+</div>
+
+<div id="bigLove">I LOVE YOU DHARA ❤️</div>
+
+<canvas id="fireworks"></canvas>
+
+<div id="main" style="display:none;">
+
+<img src="family.jpg">
+
+<div class="glow">Ashok ❤️ Dhara</div>
+
+<h3>Married on March 2, 2020 💍</h3>
+<h3 id="days"></h3>
+<h3 id="countdown"></h3>
+
+<p id="typewriter"></p>
+
+<button id="yes" onclick="celebrate()" style="background:#ff4da6;color:white;">Yes ❤️</button>
+<button id="no" onclick="moveButton()" style="background:gray;">No 🙈</button>
+
+</div>
+
+<audio id="voice" src="voice.mp3"></audio>
+
+<script>
+
+/* Unlock */
+function unlock(){
+  const pass=document.getElementById("password").value;
+  if(pass.toLowerCase()==="shaya"){
+    document.getElementById("lockScreen").style.display="none";
+    document.getElementById("intro").style.display="flex";
+  } else {
+    document.getElementById("error").innerText="Wrong password 😜 Try again!";
+  }
+}
+
+/* Start */
+function startLove(){
+  document.getElementById("intro").style.display="none";
+  document.body.style.background="linear-gradient(to bottom,#330033,#660066)";
+  document.getElementById("main").style.display="block";
+  document.getElementById("voice").play();
+}
+
+/* Married Days */
+const weddingDate=new Date("March 2, 2020");
+const today=new Date();
+const diffDays=Math.floor((today-weddingDate)/(1000*60*60*24));
+document.getElementById("days").innerText=
+"Married for "+diffDays+" beautiful days ❤️";
+
+/* Countdown */
+let next=new Date(today.getFullYear(),2,2);
+if(today>next){next=new Date(today.getFullYear()+1,2,2);}
+const daysLeft=Math.ceil((next-today)/(1000*60*60*24));
+document.getElementById("countdown").innerText=
+daysLeft+" days until next anniversary 🎉";
+
+/* Typewriter */
+const msg="From magical Manali ❄️ to our little Shaya 👶, every moment with you is my greatest blessing.";
+let i=0;
+function type(){
+ if(i<msg.length){
+  document.getElementById("typewriter").innerHTML+=msg.charAt(i);
+  i++;
+  setTimeout(type,50);
+ }
+}
+type();
+
+/* Move No */
+function moveButton(){
+ const btn=document.getElementById("no");
+ btn.style.position="absolute";
+ btn.style.top=Math.random()*window.innerHeight+"px";
+ btn.style.left=Math.random()*window.innerWidth+"px";
+}
+
+/* Hearts */
+setInterval(()=>{
+ const h=document.createElement("div");
+ h.className="heart";
+ h.innerHTML="❤️";
+ h.style.left=Math.random()*100+"vw";
+ h.style.animationDuration=(Math.random()*3+2)+"s";
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),5000);
+},400);
+
+/* Snow */
+setInterval(()=>{
+ const s=document.createElement("div");
+ s.className="snow";
+ s.innerHTML="❄️";
+ s.style.left=Math.random()*100+"vw";
+ s.style.animationDuration=(Math.random()*5+5)+"s";
+ document.body.appendChild(s);
+ setTimeout(()=>s.remove(),8000);
+},700);
+
+/* Fireworks */
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+function celebrate(){
+ document.getElementById("bigLove").style.display="flex";
+ for(let i=0;i<40;i++){
+  setTimeout(()=>{
+   const x=Math.random()*canvas.width;
+   const y=Math.random()*canvas.height/2;
+   for(let j=0;j<60;j++){
+    ctx.beginPath();
+    ctx.arc(x+Math.random()*80-40,
+            y+Math.random()*80-40,
+            3,0,Math.PI*2);
+    ctx.fillStyle="hsl("+Math.random()*360+",100%,50%)";
+    ctx.fill();
+   }
+  },i*200);
+ }
+}
+</script>
+
+</body>
+</html>
