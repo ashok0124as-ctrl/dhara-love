@@ -5,8 +5,6 @@
 <title>Ashok ❤️ Dhara</title>
 
 <style>
-
-/* ===== BODY BACKGROUND ===== */
 body{
   margin:0;
   font-family:Arial, sans-serif;
@@ -29,9 +27,8 @@ body::before{
   z-index:0;
 }
 
-/* ===== CINEMATIC LETTERBOX ===== */
-.letterbox-top,
-.letterbox-bottom{
+/* Letterbox bars */
+.letterbox{
   position:fixed;
   left:0;
   width:100%;
@@ -40,10 +37,10 @@ body::before{
   z-index:2000;
   display:none;
 }
-.letterbox-top{ top:0; }
-.letterbox-bottom{ bottom:0; }
+.top-bar{ top:0; }
+.bottom-bar{ bottom:0; }
 
-/* ===== PARTICLES ===== */
+/* Floating particles */
 .particle{
   position:absolute;
   width:6px;
@@ -58,7 +55,7 @@ body::before{
   to{transform:translateY(-800px);opacity:0;}
 }
 
-/* ===== CONTAINER ===== */
+/* Container */
 .container{
   position:relative;
   z-index:1;
@@ -72,7 +69,7 @@ body::before{
   overflow:hidden;
 }
 
-/* ===== SCREENS ===== */
+/* Screens */
 .screen{
   position:absolute;
   inset:0;
@@ -92,7 +89,7 @@ body::before{
   pointer-events:none;
 }
 
-/* ===== ELEMENTS ===== */
+/* UI */
 input{
   padding:12px;
   border:none;
@@ -119,7 +116,6 @@ img{
   margin-top:20px;
 }
 
-/* Glow */
 .glow{
   animation:glowPulse 2s infinite alternate;
 }
@@ -128,18 +124,16 @@ img{
   to{ text-shadow:0 0 30px #ff1a75; }
 }
 
-/* Video */
 video{
   width:100%;
   max-height:500px;
   object-fit:contain;
 }
 
-/* Replay button */
 #replayBtn{
   margin-top:20px;
-  background:#ffffff;
-  color:#000;
+  background:white;
+  color:black;
 }
 
 #fullscreenHint{
@@ -150,17 +144,17 @@ video{
   color:#ff99cc;
   opacity:0.7;
 }
-
 </style>
 </head>
 
 <body>
 
-<div class="letterbox-top"></div>
-<div class="letterbox-bottom"></div>
+<div class="letterbox top-bar"></div>
+<div class="letterbox bottom-bar"></div>
 
 <div class="container">
 
+<!-- LOCK -->
 <div id="lockScreen" class="screen active">
 <h2 class="glow">Enter Our Princess Name 👶💕</h2>
 <input type="password" id="password">
@@ -168,10 +162,12 @@ video{
 <p id="error" style="color:red;"></p>
 </div>
 
+<!-- INTRO -->
 <div id="intro" class="screen">
 <h2 class="glow" onclick="startLove()">❤️ Click to Begin Our Love Story ❤️</h2>
 </div>
 
+<!-- MAIN -->
 <div id="main" class="screen">
 <img src="family.jpg">
 <h2>Will you be my forever Valentine, my always, my every heartbeat, my endless love? 💖</h2>
@@ -179,18 +175,31 @@ video{
 <button onclick="moveButton(this)" style="background:gray;">No 🙈</button>
 </div>
 
+<!-- BIG LOVE -->
 <div id="bigLove" class="screen">
 <h1 class="glow">✨ I Love You Dhara ❤️ ✨</h1>
 <h3>Happy Valentine’s Day ❤️🌹</h3>
 <h4>Forever Yours – Ashok ❤️</h4>
 </div>
 
+<!-- KISS SCREEN -->
+<div id="kissScreen" class="screen">
+<h2 class="glow">
+Say “Love you Ashok” and seal it with a sweet French kiss… 💋❤️
+</h2>
+<input type="password" id="finalPassword" placeholder="Enter Secret Password">
+<button onclick="checkPassword()">Unlock ❤️</button>
+<p id="passError" style="color:red;"></p>
+</div>
+
+<!-- VIDEO -->
 <div id="videoContainer" class="screen">
 <video id="loveVideo">
 <source src="proposal.mp4" type="video/mp4">
 </video>
 </div>
 
+<!-- END -->
 <div id="theEnd" class="screen">
 <h1 class="glow">The End ❤️</h1>
 <button id="replayBtn" onclick="replayLove()">Replay ❤️</button>
@@ -204,26 +213,23 @@ video{
 
 <script>
 
-/* ===== PARTICLES ===== */
-function createParticles(){
-  for(let i=0;i<40;i++){
-    const p=document.createElement("div");
-    p.className="particle";
-    p.style.left=Math.random()*window.innerWidth+"px";
-    p.style.top=Math.random()*window.innerHeight+"px";
-    p.style.animationDuration=(Math.random()*10+5)+"s";
-    document.body.appendChild(p);
-  }
+/* Particles */
+for(let i=0;i<40;i++){
+  const p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*window.innerWidth+"px";
+  p.style.top=Math.random()*window.innerHeight+"px";
+  p.style.animationDuration=(Math.random()*10+5)+"s";
+  document.body.appendChild(p);
 }
-createParticles();
 
-/* ===== SCREEN SWITCH ===== */
+/* Screen switch */
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-/* ===== FUNCTIONS ===== */
+/* Flow */
 function unlock(){
   if(password.value.toLowerCase()==="shaya"){
     show("intro");
@@ -246,18 +252,11 @@ function moveButton(btn){
 function celebrate(){
   show("bigLove");
   setTimeout(()=>{
-    fadeOutVoice();
-    showLetterbox();
-    show("videoContainer");
-    loveVideo.play();
-    loveVideo.onended=function(){
-      hideLetterbox();
-      show("theEnd");
-    };
+    show("kissScreen");
   },4000);
 }
 
-/* ===== SMOOTH FADE OUT ===== */
+/* Fade out voice */
 function fadeOutVoice(){
   let fade=setInterval(()=>{
     if(voice.volume>0.05){
@@ -270,25 +269,31 @@ function fadeOutVoice(){
   },200);
 }
 
-/* ===== LETTERBOX ===== */
-function showLetterbox(){
-  document.querySelector(".letterbox-top").style.display="block";
-  document.querySelector(".letterbox-bottom").style.display="block";
-}
-function hideLetterbox(){
-  document.querySelector(".letterbox-top").style.display="none";
-  document.querySelector(".letterbox-bottom").style.display="none";
+function checkPassword(){
+  if(finalPassword.value.toLowerCase().trim()==="manali"){
+    fadeOutVoice();
+    document.querySelectorAll(".letterbox").forEach(bar=>bar.style.display="block");
+    show("videoContainer");
+    loveVideo.play();
+    loveVideo.onended=function(){
+      document.querySelectorAll(".letterbox").forEach(bar=>bar.style.display="none");
+      show("theEnd");
+    };
+  }else{
+    passError.innerText="Wrong password 😘 Try again.";
+  }
 }
 
-/* ===== REPLAY ===== */
 function replayLove(){
-  show("main");
   loveVideo.currentTime=0;
+  show("main");
+  voice.volume=1;
+  voice.play();
 }
 
-/* ===== FULL LOVE MODE ===== */
-document.addEventListener("keydown", function(event){
-  if(event.key.toLowerCase()==="f"){
+/* Fullscreen */
+document.addEventListener("keydown", function(e){
+  if(e.key.toLowerCase()==="f"){
     if(!document.fullscreenElement){
       document.documentElement.requestFullscreen();
     }else{
@@ -296,7 +301,6 @@ document.addEventListener("keydown", function(event){
     }
   }
 });
-
 </script>
 
 </body>
