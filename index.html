@@ -169,12 +169,16 @@ img{
 .top-bar{ top:0; }
 .bottom-bar{ bottom:0; }
 
+/* 🎬 FIXED VIDEO SCALING (NO CROPPING) */
 video{
-  width:100%;
-  height:100%;
+  max-width:90vw;
+  max-height:85vh;
+  width:auto;
+  height:auto;
   object-fit:contain;
 }
 
+/* Fullscreen hint */
 #fullscreenHint{
   position:fixed;
   bottom:15px;
@@ -283,13 +287,11 @@ for(let i=0;i<40;i++){
   document.body.appendChild(p);
 }
 
-/* Screen control */
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-/* Unlock */
 function unlock(){
   if(password.value.toLowerCase()==="shaya"){
     show("intro");
@@ -298,29 +300,23 @@ function unlock(){
   }
 }
 
-/* Start */
 function startLove(){
   show("main");
   voice.volume=1;
   voice.play();
 }
 
-/* Move No */
 function moveButton(btn){
   btn.style.position="relative";
   btn.style.left=Math.random()*300-150+"px";
 }
 
-/* Celebrate */
 function celebrate(){
   show("bigLove");
-
   startAnniversaryCounter();
-
   setTimeout(()=>show("kissScreen"),6000);
 }
 
-/* Kiss */
 function kissDetected(){
   document.getElementById("kissDetectedText").classList.add("show");
   setTimeout(()=>{
@@ -328,7 +324,6 @@ function kissDetected(){
   },1500);
 }
 
-/* Fade voice */
 function fadeOutVoice(){
   let fade=setInterval(()=>{
     if(voice.volume>0.05){
@@ -341,7 +336,6 @@ function fadeOutVoice(){
   },200);
 }
 
-/* Password */
 function checkPassword(){
   if(finalPassword.value.toLowerCase().trim()==="manali"){
     fadeOutVoice();
@@ -357,19 +351,15 @@ function checkPassword(){
   }
 }
 
-/* Replay */
 function replayLove(){
   loveVideo.currentTime=0;
   show("main");
   voice.play();
 }
 
-/* Anniversary Counter Animation */
 function startAnniversaryCounter(){
-
   const weddingDate = new Date("March 2, 2020");
   const today = new Date();
-
   const totalDays = Math.floor((today - weddingDate) / (1000*60*60*24));
 
   let currentDay = 0;
@@ -397,7 +387,6 @@ function startAnniversaryCounter(){
     daysLeft + " days until our next anniversary 🎉";
 }
 
-/* Fullscreen */
 document.addEventListener("keydown", function(e){
   if(e.key.toLowerCase()==="f"){
     if(!document.fullscreenElement){
