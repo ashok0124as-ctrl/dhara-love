@@ -9,76 +9,31 @@ body{
   margin:0;
   font-family:Arial, sans-serif;
   height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:url('background.jpg') center/cover no-repeat;
-  overflow:hidden;
+  background:url('background.jpg') center/cover no-repeat fixed;
   color:white;
+  overflow:hidden;
 }
 
-/* Blur overlay */
-body::before{
-  content:"";
-  position:absolute;
+/* Soft overlay for readability */
+.overlay{
+  position:fixed;
   inset:0;
-  backdrop-filter:blur(12px);
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.45);
+  backdrop-filter:blur(5px);
   z-index:0;
 }
 
-/* Letterbox bars */
-.letterbox{
-  position:fixed;
-  left:0;
-  width:100%;
-  height:60px;
-  background:black;
-  z-index:2000;
-  display:none;
-}
-.top-bar{ top:0; }
-.bottom-bar{ bottom:0; }
-
-/* Floating particles */
-.particle{
-  position:absolute;
-  width:6px;
-  height:6px;
-  background:white;
-  border-radius:50%;
-  opacity:0.6;
-  animation:floatParticle linear infinite;
-}
-@keyframes floatParticle{
-  from{transform:translateY(0);opacity:0.8;}
-  to{transform:translateY(-800px);opacity:0;}
-}
-
-/* Container */
-.container{
-  position:relative;
-  z-index:1;
-  width:900px;
-  height:600px;
-  background:rgba(0,0,0,0.85);
-  border-radius:20px;
-  box-shadow:0 0 60px rgba(255,0,120,0.4);
-  padding:40px;
-  text-align:center;
-  overflow:hidden;
-}
-
-/* Screens */
+/* Fullscreen screens */
 .screen{
-  position:absolute;
+  position:fixed;
   inset:0;
   display:flex;
-  flex-direction:column;
   justify-content:center;
   align-items:center;
+  flex-direction:column;
   opacity:0;
   transition:opacity 1s ease;
+  z-index:1;
 }
 
 .screen.active{
@@ -89,7 +44,6 @@ body::before{
   pointer-events:none;
 }
 
-/* UI */
 input{
   padding:12px;
   border:none;
@@ -111,7 +65,7 @@ button{
 }
 
 img{
-  width:300px;
+  width:350px;
   border-radius:20px;
   margin-top:20px;
 }
@@ -119,6 +73,7 @@ img{
 .glow{
   animation:glowPulse 2s infinite alternate;
 }
+
 @keyframes glowPulse{
   from{ text-shadow:0 0 10px #ff66b2; }
   to{ text-shadow:0 0 30px #ff1a75; }
@@ -126,33 +81,56 @@ img{
 
 video{
   width:100%;
-  max-height:500px;
+  height:100%;
   object-fit:contain;
 }
 
-#replayBtn{
-  margin-top:20px;
+/* Floating particles */
+.particle{
+  position:absolute;
+  width:6px;
+  height:6px;
   background:white;
-  color:black;
+  border-radius:50%;
+  opacity:0.6;
+  animation:floatParticle linear infinite;
+}
+@keyframes floatParticle{
+  from{transform:translateY(0);opacity:0.8;}
+  to{transform:translateY(-800px);opacity:0;}
 }
 
+/* Letterbox */
+.letterbox{
+  position:fixed;
+  left:0;
+  width:100%;
+  height:60px;
+  background:black;
+  z-index:3;
+  display:none;
+}
+.top-bar{ top:0; }
+.bottom-bar{ bottom:0; }
+
 #fullscreenHint{
-  position:absolute;
-  bottom:10px;
+  position:fixed;
+  bottom:15px;
   right:20px;
   font-size:14px;
   color:#ff99cc;
   opacity:0.7;
+  z-index:2;
 }
 </style>
 </head>
 
 <body>
 
+<div class="overlay"></div>
+
 <div class="letterbox top-bar"></div>
 <div class="letterbox bottom-bar"></div>
-
-<div class="container">
 
 <!-- LOCK -->
 <div id="lockScreen" class="screen active">
@@ -182,7 +160,7 @@ video{
 <h4>Forever Yours – Ashok ❤️</h4>
 </div>
 
-<!-- KISS SCREEN -->
+<!-- KISS -->
 <div id="kissScreen" class="screen">
 <h2 class="glow">
 Say “Love you Ashok” and seal it with a sweet French kiss… 💋❤️
@@ -202,18 +180,16 @@ Say “Love you Ashok” and seal it with a sweet French kiss… 💋❤️
 <!-- END -->
 <div id="theEnd" class="screen">
 <h1 class="glow">The End ❤️</h1>
-<button id="replayBtn" onclick="replayLove()">Replay ❤️</button>
+<button onclick="replayLove()">Replay ❤️</button>
 </div>
 
 <div id="fullscreenHint">Press <b>F</b> for Full Love Mode ❤️</div>
-
-</div>
 
 <audio id="voice" src="voice.mp3"></audio>
 
 <script>
 
-/* Particles */
+/* Floating particles */
 for(let i=0;i<40;i++){
   const p=document.createElement("div");
   p.className="particle";
@@ -229,7 +205,6 @@ function show(id){
   document.getElementById(id).classList.add('active');
 }
 
-/* Flow */
 function unlock(){
   if(password.value.toLowerCase()==="shaya"){
     show("intro");
@@ -251,12 +226,9 @@ function moveButton(btn){
 
 function celebrate(){
   show("bigLove");
-  setTimeout(()=>{
-    show("kissScreen");
-  },4000);
+  setTimeout(()=>show("kissScreen"),4000);
 }
 
-/* Fade out voice */
 function fadeOutVoice(){
   let fade=setInterval(()=>{
     if(voice.volume>0.05){
@@ -272,11 +244,11 @@ function fadeOutVoice(){
 function checkPassword(){
   if(finalPassword.value.toLowerCase().trim()==="manali"){
     fadeOutVoice();
-    document.querySelectorAll(".letterbox").forEach(bar=>bar.style.display="block");
+    document.querySelectorAll(".letterbox").forEach(b=>b.style.display="block");
     show("videoContainer");
     loveVideo.play();
     loveVideo.onended=function(){
-      document.querySelectorAll(".letterbox").forEach(bar=>bar.style.display="none");
+      document.querySelectorAll(".letterbox").forEach(b=>b.style.display="none");
       show("theEnd");
     };
   }else{
@@ -287,7 +259,6 @@ function checkPassword(){
 function replayLove(){
   loveVideo.currentTime=0;
   show("main");
-  voice.volume=1;
   voice.play();
 }
 
