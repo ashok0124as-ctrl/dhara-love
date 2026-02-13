@@ -6,7 +6,6 @@
 
 <style>
 *{box-sizing:border-box;}
-
 body{
   margin:0;
   font-family:'Segoe UI', sans-serif;
@@ -18,154 +17,147 @@ body{
 
 /* LOCK */
 #lockScreen{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:black;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-  z-index:100;
+  position:fixed;width:100%;height:100%;
+  background:black;display:flex;
+  flex-direction:column;justify-content:center;
+  align-items:center;z-index:200;
 }
-
 input{
-  padding:12px;
-  font-size:18px;
-  border-radius:8px;
-  border:none;
-  width:80%;
-  max-width:300px;
-  text-align:center;
+  padding:12px;font-size:16px;border:none;
+  border-radius:10px;width:80%;max-width:300px;
+  text-align:center;margin-top:10px;
 }
-
 button{
-  padding:14px 24px;
-  font-size:18px;
-  border:none;
-  border-radius:30px;
-  margin:12px;
-  cursor:pointer;
-  width:70%;
-  max-width:260px;
+  padding:14px 20px;font-size:16px;
+  border:none;border-radius:30px;
+  margin:12px;cursor:pointer;
 }
 
 /* INTRO */
 #intro{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:black;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  font-size:22px;
-  padding:30px;
-  z-index:90;
+  position:fixed;width:100%;height:100%;
+  background:black;display:none;
+  justify-content:center;align-items:center;
+  z-index:180;padding:20px;font-size:20px;
 }
 
 /* MAIN */
-#main{ padding:20px; }
-
+#main{display:none;padding:20px;}
 img{
-  width:85%;
-  max-width:300px;
-  border-radius:20px;
-  margin-top:30px;
+  width:85%;max-width:300px;
+  border-radius:20px;margin-top:30px;
 }
 
 #proposalText{
-  margin-top:25px;
-  font-size:20px;
-  line-height:1.5;
+  margin-top:25px;font-size:20px;
   color:#ff99cc;
   animation:glowProposal 2s infinite alternate;
 }
-
 @keyframes glowProposal{
-  from{ text-shadow:0 0 8px #ff66b2; }
-  to{ text-shadow:0 0 20px #ff1a75; }
-}
-
-/* HEARTS */
-.heart{
-  position:fixed;
-  top:-10px;
-  animation:fall linear infinite;
-}
-
-@keyframes fall{
-  to{ transform:translateY(100vh); }
+  from{ text-shadow:0 0 8px #ff66b2;}
+  to{ text-shadow:0 0 20px #ff1a75;}
 }
 
 /* BIG LOVE */
 #bigLove{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:black;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:20px;
-  font-size:28px;
-  color:gold;
-  z-index:120;
-  opacity:0;
+  position:fixed;width:100%;height:100%;
+  background:black;display:none;
+  justify-content:center;align-items:center;
+  text-align:center;padding:20px;
+  z-index:150;opacity:0;
   transform:scale(0.5);
   transition:all 2s ease;
 }
-
 #bigLove.show{
+  opacity:1;transform:scale(1);
+}
+
+/* Slow Zoom */
+#loveContent{
+  animation:slowZoom 8s ease forwards;
+}
+@keyframes slowZoom{
+  0%{transform:scale(1);}
+  100%{transform:scale(1.15);}
+}
+
+/* Vignette */
+#bigLove::before{
+  content:"";position:absolute;width:100%;height:100%;
+  background:radial-gradient(circle,rgba(0,0,0,0)40%,rgba(0,0,0,0.7)100%);
+  z-index:-1;
+}
+
+/* Gold Shimmer */
+#mainLove{
+  font-size:26px;
+  background:linear-gradient(90deg,gold,orange,gold);
+  background-size:200%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:goldShimmer 3s linear infinite;
+}
+@keyframes goldShimmer{
+  0%{background-position:0%;}
+  100%{background-position:200%;}
+}
+
+/* Valentine + Signature */
+#valentineText,#signature{
+  opacity:0;transition:all 2s ease;
+}
+#valentineText.show,#signature.show{
   opacity:1;
-  transform:scale(1.1);
 }
+#signature{margin-top:15px;color:#ffccdd;font-size:18px;}
 
-@keyframes pulseGlow{
-  0%{ text-shadow:0 0 10px gold, 0 0 20px orange; }
-  50%{ text-shadow:0 0 25px gold, 0 0 40px orange; }
-  100%{ text-shadow:0 0 10px gold, 0 0 20px orange; }
-}
-
-#bigLove span{ animation:pulseGlow 2s infinite; }
-
-/* ROSE PETALS 🌹 */
+/* Rose petals */
 .rose{
-  position:fixed;
-  top:-10px;
-  font-size:22px;
+  position:fixed;top:-10px;font-size:22px;
   animation:fall linear infinite;
 }
-
-/* SHAKE */
-@keyframes shakeScreen{
-  0%{transform:translate(0,0);}
-  25%{transform:translate(3px,-3px);}
-  50%{transform:translate(-3px,3px);}
-  75%{transform:translate(3px,3px);}
-  100%{transform:translate(0,0);}
+@keyframes fall{
+  to{transform:translateY(100vh);}
 }
-.shake{ animation:shakeScreen 0.4s ease; }
 
-/* VIDEO */
+/* Fade Black */
+#fadeBlack{
+  position:fixed;width:100%;height:100%;
+  background:black;opacity:0;
+  transition:opacity 2s ease;
+  z-index:140;
+}
+#fadeBlack.show{opacity:1;}
+
+/* Typing Screen */
+#finalInputScreen{
+  position:fixed;width:100%;height:100%;
+  background:black;display:none;
+  justify-content:center;align-items:center;
+  z-index:160;padding:20px;
+}
+#finalBox{max-width:90%;}
+
+/* Video */
 #videoContainer{
-  display:none;
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:black;
-  justify-content:center;
-  align-items:center;
-  z-index:130;
+  display:none;position:fixed;
+  width:100%;height:100%;
+  background:black;z-index:170;
+}
+video{
+  width:100%;height:100%;
+  object-fit:contain;background:black;
 }
 
-video{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+/* The End */
+#theEnd{
+  position:fixed;width:100%;height:100%;
+  background:black;display:none;
+  justify-content:center;align-items:center;
+  font-size:28px;z-index:300;
+  opacity:0;transition:opacity 3s ease;
 }
+#theEnd.show{display:flex;opacity:1;}
 </style>
 </head>
 
@@ -178,12 +170,30 @@ video{
 <p id="error" style="color:red;"></p>
 </div>
 
-<div id="intro" onclick="startLove()">
-❤️ Tap to Begin Our Love Story ❤️
-</div>
+<div id="intro" onclick="startLove()">❤️ Tap to Begin Our Love Story ❤️</div>
 
 <div id="bigLove">
-<span>✨ I Love You Dhara ❤️ ✨</span>
+<div id="loveContent">
+<span id="mainLove">✨ I Love You Dhara ❤️ ✨</span>
+<br><br>
+<div id="valentineText">Happy Valentine’s Day ❤️🌹</div>
+<div id="signature">Forever Yours – Ashok ❤️</div>
+</div>
+</div>
+
+<div id="fadeBlack"></div>
+
+<div id="finalInputScreen">
+<div id="finalBox">
+<h3>Before we relive our memories ❤️</h3>
+<p>Type this exactly:</p>
+<p style="color:#ff99cc;">
+I love you Ashok, you can see our old memories again
+</p>
+<input type="text" id="loveConfirmInput">
+<button onclick="checkLoveMessage()" style="background:#ff4da6;color:white;">Continue ❤️</button>
+<p id="finalError" style="color:red;"></p>
+</div>
 </div>
 
 <div id="videoContainer">
@@ -192,17 +202,15 @@ video{
 </video>
 </div>
 
-<div id="main" style="display:none;">
+<div id="theEnd">The End ❤️</div>
 
+<div id="main">
 <img src="family.jpg">
-
 <h2 id="proposalText">
 Will you be my forever Valentine, my always, my every heartbeat, my endless love? 💖
 </h2>
-
 <button onclick="celebrate()" style="background:#ff4da6;color:white;">Yes ❤️</button>
-<button id="no" onclick="moveButton()" style="background:gray;color:white;">No 🙈</button>
-
+<button onclick="moveButton()" style="background:gray;color:white;">No 🙈</button>
 </div>
 
 <audio id="voice" src="voice.mp3"></audio>
@@ -210,102 +218,74 @@ Will you be my forever Valentine, my always, my every heartbeat, my endless love
 <audio id="heartbeat" src="heartbeat.mp3"></audio>
 
 <script>
-
-/* Unlock */
 function unlock(){
-  const pass=document.getElementById("password").value;
-  if(pass.toLowerCase()==="shaya"){
-    document.getElementById("lockScreen").style.display="none";
-    document.getElementById("intro").style.display="flex";
-  }else{
-    document.getElementById("error").innerText="Wrong password 😜";
-  }
+ if(document.getElementById("password").value.toLowerCase()==="shaya"){
+  lockScreen.style.display="none";
+  intro.style.display="flex";
+ }else{
+  error.innerText="Wrong password 😜";
+ }
 }
-
-/* Start */
 function startLove(){
-  document.getElementById("intro").style.display="none";
-  document.getElementById("main").style.display="block";
-  document.getElementById("voice").play();
+ intro.style.display="none";
+ main.style.display="block";
+ voice.play();
 }
-
-/* Move No */
 function moveButton(){
-  const btn=document.getElementById("no");
-  btn.style.position="absolute";
-  btn.style.top=Math.random()*window.innerHeight*0.7+"px";
-  btn.style.left=Math.random()*window.innerWidth*0.6+"px";
+ event.target.style.position="absolute";
+ event.target.style.top=Math.random()*70+"vh";
+ event.target.style.left=Math.random()*60+"vw";
+}
+function celebrate(){
+ document.getElementById("voice").pause();
+ heartbeat.play();
+ bgMusic.volume=0;bgMusic.play();
+ let fade=setInterval(()=>{
+  if(bgMusic.volume<0.6) bgMusic.volume+=0.05;
+  else clearInterval(fade);
+ },200);
+
+ bigLove.style.display="flex";
+ setTimeout(()=>bigLove.classList.add("show"),100);
+ setTimeout(()=>valentineText.classList.add("show"),2000);
+ setTimeout(()=>signature.classList.add("show"),3500);
+
+ let roses=setInterval(()=>{
+  const r=document.createElement("div");
+  r.className="rose";r.innerHTML="🌹";
+  r.style.left=Math.random()*100+"vw";
+  r.style.animationDuration=(Math.random()*3+2)+"s";
+  document.body.appendChild(r);
+  setTimeout(()=>r.remove(),5000);
+ },400);
+
+ setTimeout(()=>{
+  clearInterval(roses);heartbeat.pause();
+  fadeBlack.classList.add("show");
+  setTimeout(()=>{
+   bigLove.style.display="none";
+   finalInputScreen.style.display="flex";
+  },2000);
+ },6000);
 }
 
-/* Heart Shower */
-setInterval(()=>{
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML="❤️";
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=(Math.random()*3+2)+"s";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),5000);
-},500);
-
-/* Celebrate */
-function celebrate(){
-
-  document.body.classList.add("shake");
-  setTimeout(()=>document.body.classList.remove("shake"),400);
-
-  document.getElementById("voice").pause();
-
-  const heartbeat=document.getElementById("heartbeat");
-  heartbeat.play();
-
-  const bg=document.getElementById("bgMusic");
-  bg.volume=0;
-  bg.play();
-
-  let fade=setInterval(()=>{
-    if(bg.volume<0.6){
-      bg.volume+=0.05;
-    }else{
-      clearInterval(fade);
-    }
-  },200);
-
-  const big=document.getElementById("bigLove");
-  big.style.display="flex";
-  setTimeout(()=>big.classList.add("show"),100);
-
-  /* ROSE PETALS 🌹 */
-  let roses=setInterval(()=>{
-    const r=document.createElement("div");
-    r.className="rose";
-    r.innerHTML="🌹";
-    r.style.left=Math.random()*100+"vw";
-    r.style.animationDuration=(Math.random()*3+2)+"s";
-    document.body.appendChild(r);
-    setTimeout(()=>r.remove(),5000);
-  },400);
-
-  setTimeout(()=>{
-    clearInterval(roses);
-    heartbeat.pause();
-    big.style.display="none";
-
-    const video=document.getElementById("loveVideo");
-    document.getElementById("videoContainer").style.display="flex";
-    video.play();
-
-    /* AUTO FULLSCREEN */
-    if(video.requestFullscreen){
-      video.requestFullscreen();
-    }else if(video.webkitEnterFullscreen){
-      video.webkitEnterFullscreen();
-    }
-
-  },6000);
+function checkLoveMessage(){
+ const correct="i love you ashok, you can see our old memories again";
+ const user=document.getElementById("loveConfirmInput").value.toLowerCase().trim();
+ if(user===correct){
+  finalInputScreen.style.display="none";
+  videoContainer.style.display="block";
+  loveVideo.play();
+  if(loveVideo.requestFullscreen){loveVideo.requestFullscreen();}
+  loveVideo.onended=function(){
+   videoContainer.style.display="none";
+   theEnd.classList.add("show");
+  }
+ }else{
+  finalError.innerText="Type it exactly as shown ❤️";
+ }
 }
 </script>
 
 </body>
 </html>
-
