@@ -23,7 +23,7 @@ body{
   z-index:0;
 }
 
-/* FULL CENTER SYSTEM */
+/* Screen system */
 .screen{
   position:fixed;
   inset:0;
@@ -43,7 +43,7 @@ body{
   pointer-events:none;
 }
 
-/* Center content wrapper */
+/* Center content */
 .center-content{
   width:100%;
   max-width:1000px;
@@ -51,20 +51,41 @@ body{
   text-align:center;
 }
 
-/* Spacing */
 h1,h2,h3,h4,p{
   margin:18px 0;
 }
 
-/* Main Love Heading */
 .main-love{
   font-size:54px;
 }
 
-/* Bigger Valentine Text */
 .big-valentine{
   font-size:38px;
   font-weight:bold;
+}
+
+/* Anniversary styling */
+.anniversary-text{
+  font-size:24px;
+  animation:heartbeatGlow 2.5s infinite;
+}
+
+@keyframes heartbeatGlow{
+  0% { text-shadow:0 0 5px #ff4da6; }
+  50% { text-shadow:0 0 25px #ff99cc; }
+  100% { text-shadow:0 0 5px #ff4da6; }
+}
+
+.gold-shimmer{
+  background:linear-gradient(90deg,#ffd700,#fff5b1,#ffd700);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shine 3s linear infinite;
+}
+
+@keyframes shine{
+  to{ background-position:200% center; }
 }
 
 /* Inputs */
@@ -108,7 +129,7 @@ img{
   to{ text-shadow:0 0 30px #ff1a75; }
 }
 
-/* Kiss detected */
+/* Kiss animation */
 #kissDetectedText{
   font-size:24px;
   margin-top:20px;
@@ -204,6 +225,8 @@ video{
   <div class="center-content">
     <h1 class="glow main-love">✨ I Love You Dhara ❤️ ✨</h1>
     <h2 class="big-valentine">Happy Valentine’s Day ❤️🌹</h2>
+    <h3 id="marriedDays" class="anniversary-text"></h3>
+    <h3 id="anniversaryCountdown" class="gold-shimmer anniversary-text"></h3>
     <h3>Forever Yours – Ashok ❤️</h3>
   </div>
 </div>
@@ -266,6 +289,7 @@ function show(id){
   document.getElementById(id).classList.add('active');
 }
 
+/* Unlock */
 function unlock(){
   if(password.value.toLowerCase()==="shaya"){
     show("intro");
@@ -274,22 +298,29 @@ function unlock(){
   }
 }
 
+/* Start */
 function startLove(){
   show("main");
   voice.volume=1;
   voice.play();
 }
 
+/* Move No */
 function moveButton(btn){
   btn.style.position="relative";
   btn.style.left=Math.random()*300-150+"px";
 }
 
+/* Celebrate */
 function celebrate(){
   show("bigLove");
-  setTimeout(()=>show("kissScreen"),4000);
+
+  startAnniversaryCounter();
+
+  setTimeout(()=>show("kissScreen"),6000);
 }
 
+/* Kiss */
 function kissDetected(){
   document.getElementById("kissDetectedText").classList.add("show");
   setTimeout(()=>{
@@ -297,6 +328,7 @@ function kissDetected(){
   },1500);
 }
 
+/* Fade voice */
 function fadeOutVoice(){
   let fade=setInterval(()=>{
     if(voice.volume>0.05){
@@ -309,6 +341,7 @@ function fadeOutVoice(){
   },200);
 }
 
+/* Password */
 function checkPassword(){
   if(finalPassword.value.toLowerCase().trim()==="manali"){
     fadeOutVoice();
@@ -324,10 +357,44 @@ function checkPassword(){
   }
 }
 
+/* Replay */
 function replayLove(){
   loveVideo.currentTime=0;
   show("main");
   voice.play();
+}
+
+/* Anniversary Counter Animation */
+function startAnniversaryCounter(){
+
+  const weddingDate = new Date("March 2, 2020");
+  const today = new Date();
+
+  const totalDays = Math.floor((today - weddingDate) / (1000*60*60*24));
+
+  let currentDay = 0;
+  const marriedElement = document.getElementById("marriedDays");
+
+  const countInterval = setInterval(()=>{
+    if(currentDay < totalDays){
+      currentDay += Math.ceil(totalDays/100);
+      if(currentDay > totalDays) currentDay = totalDays;
+      marriedElement.innerText =
+        "Married for " + currentDay + " beautiful days ❤️";
+    } else {
+      clearInterval(countInterval);
+    }
+  },30);
+
+  let nextAnniversary = new Date(today.getFullYear(), 2, 2);
+  if(today > nextAnniversary){
+    nextAnniversary = new Date(today.getFullYear()+1, 2, 2);
+  }
+
+  const daysLeft = Math.ceil((nextAnniversary - today) / (1000*60*60*24));
+
+  document.getElementById("anniversaryCountdown").innerText =
+    daysLeft + " days until our next anniversary 🎉";
 }
 
 /* Fullscreen */
@@ -340,6 +407,7 @@ document.addEventListener("keydown", function(e){
     }
   }
 });
+
 </script>
 
 </body>
