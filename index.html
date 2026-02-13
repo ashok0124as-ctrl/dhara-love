@@ -13,7 +13,7 @@ body{
   text-align:center;
 }
 
-/* Lock */
+/* LOCK */
 #lockScreen{
   position:fixed;
   inset:0;
@@ -27,21 +27,22 @@ body{
 
 input{
   padding:12px;
-  margin-top:10px;
   border:none;
   border-radius:8px;
+  margin-top:10px;
   text-align:center;
 }
 
 button{
-  padding:12px 20px;
+  padding:12px 22px;
   margin:15px;
   border:none;
   border-radius:25px;
   cursor:pointer;
+  font-size:16px;
 }
 
-/* Intro */
+/* INTRO */
 #intro{
   position:fixed;
   inset:0;
@@ -52,20 +53,20 @@ button{
   z-index:900;
 }
 
-/* Main */
+/* MAIN */
 #main{
   display:none;
   padding:30px 20px;
 }
 
 img{
-  width:80%;
+  width:85%;
   max-width:300px;
   border-radius:20px;
   margin-top:40px;
 }
 
-/* Big Love Screen */
+/* LOVE SCREEN */
 #bigLove{
   position:fixed;
   inset:0;
@@ -87,7 +88,7 @@ img{
   to{transform:translateY(100vh);}
 }
 
-/* Fade */
+/* FADE */
 #fadeBlack{
   position:fixed;
   inset:0;
@@ -96,7 +97,7 @@ img{
   z-index:850;
 }
 
-/* Typing */
+/* TYPING */
 #finalInputScreen{
   position:fixed;
   inset:0;
@@ -108,7 +109,7 @@ img{
   z-index:900;
 }
 
-/* Video */
+/* VIDEO */
 #videoContainer{
   position:fixed;
   inset:0;
@@ -122,7 +123,7 @@ video{
   object-fit:contain;
 }
 
-/* The End */
+/* END */
 #theEnd{
   position:fixed;
   inset:0;
@@ -138,6 +139,7 @@ video{
 
 <body>
 
+<!-- LOCK -->
 <div id="lockScreen">
 <h2>Enter Our Princess Name 👶💕</h2>
 <input type="password" id="password">
@@ -145,10 +147,12 @@ video{
 <p id="error" style="color:red;"></p>
 </div>
 
+<!-- INTRO -->
 <div id="intro" onclick="startLove()">
 <h2>❤️ Tap to Begin Our Love Story ❤️</h2>
 </div>
 
+<!-- MAIN -->
 <div id="main">
 <img src="family.jpg">
 <h2>
@@ -158,6 +162,7 @@ Will you be my forever Valentine, my always, my every heartbeat, my endless love
 <button onclick="moveButton(this)" style="background:gray;color:white;">No 🙈</button>
 </div>
 
+<!-- LOVE SCREEN -->
 <div id="bigLove">
 <h1>✨ I Love You Dhara ❤️ ✨</h1>
 <h3>Happy Valentine’s Day ❤️🌹</h3>
@@ -166,25 +171,30 @@ Will you be my forever Valentine, my always, my every heartbeat, my endless love
 
 <div id="fadeBlack"></div>
 
+<!-- TYPING -->
 <div id="finalInputScreen">
-<h3>Type this exactly:</h3>
-<p style="color:#ff66b2;">
-I love you Ashok, you can see our old memories again
-</p>
+<h3>Type exactly:</h3>
+<p style="color:#ff66b2;">I love you Ashok</p>
 <input type="text" id="loveConfirmInput">
 <button onclick="checkLoveMessage()" style="background:#ff4da6;color:white;">Continue ❤️</button>
 <p id="finalError" style="color:red;"></p>
 </div>
 
+<!-- VIDEO -->
 <div id="videoContainer">
 <video id="loveVideo" playsinline>
 <source src="proposal.mp4" type="video/mp4">
 </video>
 </div>
 
+<!-- END -->
 <div id="theEnd">The End ❤️</div>
 
+<!-- VOICE -->
+<audio id="voice" src="voice.mp3"></audio>
+
 <script>
+
 function unlock(){
  if(password.value.toLowerCase()==="shaya"){
   lockScreen.style.display="none";
@@ -197,6 +207,9 @@ function unlock(){
 function startLove(){
  intro.style.display="none";
  main.style.display="block";
+
+ // Play voice after user interaction (allowed by browser)
+ voice.play();
 }
 
 function moveButton(btn){
@@ -206,6 +219,11 @@ function moveButton(btn){
 }
 
 function celebrate(){
+
+ // Stop voice when Yes is clicked
+ voice.pause();
+ voice.currentTime = 0;
+
  main.style.display="none";
  bigLove.style.display="flex";
 
@@ -232,19 +250,24 @@ function celebrate(){
 }
 
 function checkLoveMessage(){
- const correct="i love you ashok, you can see our old memories again";
- if(loveConfirmInput.value.toLowerCase().trim()===correct){
+ const correct="i love you ashok";
+ const user=loveConfirmInput.value.toLowerCase().trim();
+
+ if(user===correct){
   finalInputScreen.style.display="none";
   videoContainer.style.display="block";
   loveVideo.play();
+
   loveVideo.onended=function(){
    videoContainer.style.display="none";
    theEnd.style.display="flex";
   };
+
  } else {
-  finalError.innerText="Type it exactly ❤️";
+  finalError.innerText="Type exactly: I love you Ashok ❤️";
  }
 }
+
 </script>
 
 </body>
