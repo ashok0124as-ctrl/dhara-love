@@ -5,299 +5,297 @@
 <title>Ashok ❤️ Dhara</title>
 
 <style>
+
+/* ===== BODY BACKGROUND ===== */
 body{
   margin:0;
-  font-family:Arial;
-  background:black;
+  font-family:Arial, sans-serif;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:url('background.jpg') center/cover no-repeat;
+  overflow:hidden;
   color:white;
+}
+
+/* Blur overlay */
+body::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  backdrop-filter:blur(12px);
+  background:rgba(0,0,0,0.6);
+  z-index:0;
+}
+
+/* ===== CINEMATIC LETTERBOX ===== */
+.letterbox-top,
+.letterbox-bottom{
+  position:fixed;
+  left:0;
+  width:100%;
+  height:60px;
+  background:black;
+  z-index:2000;
+  display:none;
+}
+.letterbox-top{ top:0; }
+.letterbox-bottom{ bottom:0; }
+
+/* ===== PARTICLES ===== */
+.particle{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:white;
+  border-radius:50%;
+  opacity:0.6;
+  animation:floatParticle linear infinite;
+}
+@keyframes floatParticle{
+  from{transform:translateY(0);opacity:0.8;}
+  to{transform:translateY(-800px);opacity:0;}
+}
+
+/* ===== CONTAINER ===== */
+.container{
+  position:relative;
+  z-index:1;
+  width:900px;
+  height:600px;
+  background:rgba(0,0,0,0.85);
+  border-radius:20px;
+  box-shadow:0 0 60px rgba(255,0,120,0.4);
+  padding:40px;
   text-align:center;
+  overflow:hidden;
 }
 
-/* LOCK */
-#lockScreen{
-  position:fixed;inset:0;
-  display:flex;flex-direction:column;
-  justify-content:center;align-items:center;
-  background:black;z-index:1000;
+/* ===== SCREENS ===== */
+.screen{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  transition:opacity 1s ease;
 }
 
+.screen.active{
+  opacity:1;
+  pointer-events:auto;
+}
+.screen:not(.active){
+  pointer-events:none;
+}
+
+/* ===== ELEMENTS ===== */
 input{
-  padding:12px;border:none;border-radius:8px;
-  margin-top:10px;text-align:center;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  margin-top:15px;
+  text-align:center;
+  width:250px;
 }
 
 button{
-  padding:12px 22px;margin:15px;
-  border:none;border-radius:25px;
-  cursor:pointer;font-size:16px;
+  padding:12px 25px;
+  margin:15px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  font-size:16px;
+  background:#ff4da6;
+  color:white;
 }
 
-/* INTRO */
-#intro{
-  position:fixed;inset:0;
-  display:none;justify-content:center;
-  align-items:center;background:black;
-  z-index:900;
-}
-
-/* MAIN */
-#main{display:none;padding:30px 20px;}
 img{
-  width:85%;max-width:300px;
-  border-radius:20px;margin-top:40px;
+  width:300px;
+  border-radius:20px;
+  margin-top:20px;
 }
 
-/* LOVE SCREEN */
-#bigLove{
-  position:fixed;inset:0;
-  background:black;display:none;
-  justify-content:center;align-items:center;
-  flex-direction:column;z-index:800;
+/* Glow */
+.glow{
+  animation:glowPulse 2s infinite alternate;
+}
+@keyframes glowPulse{
+  from{ text-shadow:0 0 10px #ff66b2; }
+  to{ text-shadow:0 0 30px #ff1a75; }
 }
 
-.rose{
-  position:fixed;top:-10px;font-size:22px;
-  animation:fall linear infinite;
-}
-@keyframes fall{
-  to{transform:translateY(100vh);}
-}
-
-/* FADE */
-#fadeBlack{
-  position:fixed;inset:0;
-  background:black;display:none;
-  z-index:850;
-}
-
-/* KISS SCREEN */
-#kissScreen{
-  position:fixed;inset:0;
-  display:none;justify-content:center;
-  align-items:center;text-align:center;
-  flex-direction:column;padding:20px;
-  z-index:900;
-  background:linear-gradient(-45deg,#1a001a,#330033,#000000,#4d004d);
-  background-size:400% 400%;
-  animation:romanticBG 10s ease infinite;
-}
-
-@keyframes romanticBG{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
-}
-
-#kissMessage{
-  font-size:22px;color:#ff99cc;
-  text-shadow:0 0 10px #ff4da6;
-  animation:pulseGlow 2s infinite alternate;
-}
-
-@keyframes pulseGlow{
-  from{ text-shadow:0 0 10px #ff66b2;}
-  to{ text-shadow:0 0 25px #ff1a75;}
-}
-
-#kissDetectedText{
-  margin-top:20px;font-size:22px;
-  color:#ff4da6;opacity:0;
-  transform:scale(0.5);
-  transition:all 0.8s ease;
-}
-#kissDetectedText.show{
-  opacity:1;transform:scale(1.2);
-}
-
-.kissHeart{
-  position:fixed;font-size:24px;
-  animation:burst 1.5s ease forwards;
-}
-@keyframes burst{
-  0%{transform:scale(0.5) translateY(0);opacity:1;}
-  100%{transform:scale(1.5) translateY(-100px);opacity:0;}
-}
-
-/* VIDEO */
-#videoContainer{
-  position:fixed;inset:0;
-  background:black;display:none;
-  z-index:950;
-}
+/* Video */
 video{
-  width:100%;height:100%;
+  width:100%;
+  max-height:500px;
   object-fit:contain;
 }
 
-/* END */
-#theEnd{
-  position:fixed;inset:0;
-  background:black;display:none;
-  justify-content:center;align-items:center;
-  font-size:28px;z-index:1000;
+/* Replay button */
+#replayBtn{
+  margin-top:20px;
+  background:#ffffff;
+  color:#000;
 }
+
+#fullscreenHint{
+  position:absolute;
+  bottom:10px;
+  right:20px;
+  font-size:14px;
+  color:#ff99cc;
+  opacity:0.7;
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- LOCK -->
-<div id="lockScreen">
-<h2>Enter Our Princess Name 👶💕</h2>
+<div class="letterbox-top"></div>
+<div class="letterbox-bottom"></div>
+
+<div class="container">
+
+<div id="lockScreen" class="screen active">
+<h2 class="glow">Enter Our Princess Name 👶💕</h2>
 <input type="password" id="password">
-<button onclick="unlock()" style="background:#ff4da6;color:white;">Unlock ❤️</button>
+<button onclick="unlock()">Unlock ❤️</button>
 <p id="error" style="color:red;"></p>
 </div>
 
-<!-- INTRO -->
-<div id="intro" onclick="startLove()">
-<h2>❤️ Tap to Begin Our Love Story ❤️</h2>
+<div id="intro" class="screen">
+<h2 class="glow" onclick="startLove()">❤️ Click to Begin Our Love Story ❤️</h2>
 </div>
 
-<!-- MAIN -->
-<div id="main">
+<div id="main" class="screen">
 <img src="family.jpg">
-<h2>
-Will you be my forever Valentine, my always, my every heartbeat, my endless love? 💖
-</h2>
-<button onclick="celebrate()" style="background:#ff4da6;color:white;">Yes ❤️</button>
-<button onclick="moveButton(this)" style="background:gray;color:white;">No 🙈</button>
+<h2>Will you be my forever Valentine, my always, my every heartbeat, my endless love? 💖</h2>
+<button onclick="celebrate()">Yes ❤️</button>
+<button onclick="moveButton(this)" style="background:gray;">No 🙈</button>
 </div>
 
-<!-- LOVE -->
-<div id="bigLove">
-<h1>✨ I Love You Dhara ❤️ ✨</h1>
+<div id="bigLove" class="screen">
+<h1 class="glow">✨ I Love You Dhara ❤️ ✨</h1>
 <h3>Happy Valentine’s Day ❤️🌹</h3>
 <h4>Forever Yours – Ashok ❤️</h4>
 </div>
 
-<div id="fadeBlack"></div>
-
-<!-- KISS SCREEN -->
-<div id="kissScreen">
-<h2 id="kissMessage">
-Say “Love you Ashok” and seal it with a sweet French kiss… 💋❤️
-</h2>
-<p>Then your lovable Chubby Hubby will whisper the secret password.</p>
-
-<button id="revealBtn" onclick="kissDetected()" style="display:none;background:#ff4da6;color:white;">
-Enter Secret Password ❤️
-</button>
-
-<div id="kissDetectedText">💋 Kiss Detected ❤️</div>
-
-<div id="passwordBox" style="display:none;margin-top:20px;">
-<input type="password" id="finalPassword" placeholder="Enter password">
-<button onclick="checkPassword()" style="background:#ff4da6;color:white;">Unlock ❤️</button>
-<p id="passError" style="color:red;"></p>
-</div>
-</div>
-
-<!-- VIDEO -->
-<div id="videoContainer">
-<video id="loveVideo" playsinline>
+<div id="videoContainer" class="screen">
+<video id="loveVideo">
 <source src="proposal.mp4" type="video/mp4">
 </video>
 </div>
 
-<!-- END -->
-<div id="theEnd">The End ❤️</div>
+<div id="theEnd" class="screen">
+<h1 class="glow">The End ❤️</h1>
+<button id="replayBtn" onclick="replayLove()">Replay ❤️</button>
+</div>
 
-<!-- VOICE -->
+<div id="fullscreenHint">Press <b>F</b> for Full Love Mode ❤️</div>
+
+</div>
+
 <audio id="voice" src="voice.mp3"></audio>
 
 <script>
 
+/* ===== PARTICLES ===== */
+function createParticles(){
+  for(let i=0;i<40;i++){
+    const p=document.createElement("div");
+    p.className="particle";
+    p.style.left=Math.random()*window.innerWidth+"px";
+    p.style.top=Math.random()*window.innerHeight+"px";
+    p.style.animationDuration=(Math.random()*10+5)+"s";
+    document.body.appendChild(p);
+  }
+}
+createParticles();
+
+/* ===== SCREEN SWITCH ===== */
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+/* ===== FUNCTIONS ===== */
 function unlock(){
- if(password.value.toLowerCase()==="shaya"){
-  lockScreen.style.display="none";
-  intro.style.display="flex";
- }else{
-  error.innerText="Wrong password 😜";
- }
+  if(password.value.toLowerCase()==="shaya"){
+    show("intro");
+  }else{
+    error.innerText="Wrong password 😜";
+  }
 }
 
 function startLove(){
- intro.style.display="none";
- main.style.display="block";
- voice.play();
+  show("main");
+  voice.volume=1;
+  voice.play();
 }
 
 function moveButton(btn){
- btn.style.position="absolute";
- btn.style.top=Math.random()*70+"vh";
- btn.style.left=Math.random()*60+"vw";
+  btn.style.position="relative";
+  btn.style.left=Math.random()*300-150+"px";
 }
 
 function celebrate(){
- main.style.display="none";
- bigLove.style.display="flex";
-
- let roses=setInterval(()=>{
-  const r=document.createElement("div");
-  r.className="rose";
-  r.innerHTML="🌹";
-  r.style.left=Math.random()*100+"vw";
-  r.style.animationDuration=(Math.random()*3+2)+"s";
-  document.body.appendChild(r);
-  setTimeout(()=>r.remove(),5000);
- },400);
-
- setTimeout(()=>{
-  clearInterval(roses);
-  bigLove.style.display="none";
-  fadeBlack.style.display="block";
-
+  show("bigLove");
   setTimeout(()=>{
-   kissScreen.style.display="flex";
-   revealBtn.style.display="inline-block";
-  },1500);
-
- },5000);
+    fadeOutVoice();
+    showLetterbox();
+    show("videoContainer");
+    loveVideo.play();
+    loveVideo.onended=function(){
+      hideLetterbox();
+      show("theEnd");
+    };
+  },4000);
 }
 
-function kissDetected(){
- const kissText=document.getElementById("kissDetectedText");
- kissText.classList.add("show");
-
- for(let i=0;i<12;i++){
-  const heart=document.createElement("div");
-  heart.className="kissHeart";
-  heart.innerHTML="❤️";
-  heart.style.left=Math.random()*100+"vw";
-  heart.style.top="60vh";
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),1500);
- }
-
- setTimeout(()=>{
-  document.getElementById("passwordBox").style.display="block";
- },2000);
+/* ===== SMOOTH FADE OUT ===== */
+function fadeOutVoice(){
+  let fade=setInterval(()=>{
+    if(voice.volume>0.05){
+      voice.volume-=0.05;
+    }else{
+      clearInterval(fade);
+      voice.pause();
+      voice.volume=1;
+    }
+  },200);
 }
 
-function checkPassword(){
- const correct="manali";
- const user=document.getElementById("finalPassword").value.toLowerCase().trim();
-
- if(user===correct){
-
-  /* STOP VOICE ONLY NOW */
-  voice.pause();
-  voice.currentTime = 0;
-
-  kissScreen.style.display="none";
-  videoContainer.style.display="block";
-  loveVideo.play();
-
-  loveVideo.onended=function(){
-   videoContainer.style.display="none";
-   theEnd.style.display="flex";
-  };
-
- }else{
-  passError.innerText="Wrong password 😘 Try again.";
- }
+/* ===== LETTERBOX ===== */
+function showLetterbox(){
+  document.querySelector(".letterbox-top").style.display="block";
+  document.querySelector(".letterbox-bottom").style.display="block";
 }
+function hideLetterbox(){
+  document.querySelector(".letterbox-top").style.display="none";
+  document.querySelector(".letterbox-bottom").style.display="none";
+}
+
+/* ===== REPLAY ===== */
+function replayLove(){
+  show("main");
+  loveVideo.currentTime=0;
+}
+
+/* ===== FULL LOVE MODE ===== */
+document.addEventListener("keydown", function(event){
+  if(event.key.toLowerCase()==="f"){
+    if(!document.fullscreenElement){
+      document.documentElement.requestFullscreen();
+    }else{
+      document.exitFullscreen();
+    }
+  }
+});
 
 </script>
 
