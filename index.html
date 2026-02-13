@@ -5,110 +5,78 @@
 <title>Ashok ❤️ Dhara</title>
 
 <style>
-*{box-sizing:border-box;}
 body{
   margin:0;
-  font-family:Arial, sans-serif;
+  font-family:Arial;
   background:black;
   color:white;
   text-align:center;
-  overflow:hidden;
 }
 
-/* ===== LOCK SCREEN ===== */
+/* Lock */
 #lockScreen{
-  position:fixed;inset:0;
-  display:flex;flex-direction:column;
-  justify-content:center;align-items:center;
-  background:black;z-index:1000;
+  position:fixed;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:black;
+  z-index:1000;
 }
 
 input{
-  padding:12px;font-size:16px;
-  border:none;border-radius:8px;
-  margin-top:10px;width:80%;
-  max-width:300px;text-align:center;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:8px;
+  text-align:center;
 }
 
 button{
-  padding:12px 22px;
+  padding:12px 20px;
   margin:15px;
-  border:none;border-radius:30px;
-  font-size:16px;cursor:pointer;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
 }
 
-/* ===== INTRO ===== */
+/* Intro */
 #intro{
-  position:fixed;inset:0;
-  display:none;justify-content:center;
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
   align-items:center;
-  background:black;z-index:900;
+  background:black;
+  z-index:900;
 }
 
-/* ===== MAIN SCREEN ===== */
+/* Main */
 #main{
   display:none;
-  padding:20px;
-  position:relative;
-  z-index:1;
+  padding:30px 20px;
 }
 
 img{
-  width:85%;
+  width:80%;
   max-width:300px;
   border-radius:20px;
   margin-top:40px;
 }
 
-#proposalText{
-  margin-top:25px;
-  font-size:20px;
-  color:#ff99cc;
-  text-shadow:0 0 10px #ff4da6;
-}
-
-/* ===== BIG LOVE CINEMA ===== */
+/* Big Love Screen */
 #bigLove{
-  position:fixed;inset:0;
+  position:fixed;
+  inset:0;
   background:black;
   display:none;
   justify-content:center;
   align-items:center;
   flex-direction:column;
-  z-index:500;
+  z-index:800;
 }
 
-#mainLove{
-  font-size:26px;
-  background:linear-gradient(90deg,gold,orange,gold);
-  background-size:200%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:shimmer 3s linear infinite;
-}
-@keyframes shimmer{
-  0%{background-position:0%;}
-  100%{background-position:200%;}
-}
-
-#valentineText{
-  margin-top:15px;
-  font-size:20px;
-  opacity:0;
-  transition:opacity 2s ease;
-}
-#valentineText.show{opacity:1;}
-
-#signature{
-  margin-top:15px;
-  font-size:18px;
-  color:#ffccdd;
-  opacity:0;
-  transition:opacity 2s ease;
-}
-#signature.show{opacity:1;}
-
-/* ===== ROSES ===== */
 .rose{
   position:fixed;
   top:-10px;
@@ -119,35 +87,34 @@ img{
   to{transform:translateY(100vh);}
 }
 
-/* ===== FADE ===== */
+/* Fade */
 #fadeBlack{
-  position:fixed;inset:0;
+  position:fixed;
+  inset:0;
   background:black;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 2s ease;
-  z-index:600;
+  display:none;
+  z-index:850;
 }
-#fadeBlack.show{opacity:1;}
 
-/* ===== TYPING SCREEN ===== */
+/* Typing */
 #finalInputScreen{
-  position:fixed;inset:0;
+  position:fixed;
+  inset:0;
   background:black;
   display:none;
   justify-content:center;
   align-items:center;
   flex-direction:column;
-  padding:20px;
-  z-index:700;
+  z-index:900;
 }
 
-/* ===== VIDEO ===== */
+/* Video */
 #videoContainer{
-  position:fixed;inset:0;
-  display:none;
+  position:fixed;
+  inset:0;
   background:black;
-  z-index:800;
+  display:none;
+  z-index:950;
 }
 video{
   width:100%;
@@ -155,22 +122,22 @@ video{
   object-fit:contain;
 }
 
-/* ===== THE END ===== */
+/* The End */
 #theEnd{
-  position:fixed;inset:0;
+  position:fixed;
+  inset:0;
+  background:black;
   display:none;
   justify-content:center;
   align-items:center;
   font-size:28px;
-  background:black;
-  z-index:900;
+  z-index:1000;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOCK -->
 <div id="lockScreen">
 <h2>Enter Our Princess Name 👶💕</h2>
 <input type="password" id="password">
@@ -178,36 +145,29 @@ video{
 <p id="error" style="color:red;"></p>
 </div>
 
-<!-- INTRO -->
 <div id="intro" onclick="startLove()">
 <h2>❤️ Tap to Begin Our Love Story ❤️</h2>
 </div>
 
-<!-- MAIN -->
 <div id="main">
 <img src="family.jpg">
-<h2 id="proposalText">
+<h2>
 Will you be my forever Valentine, my always, my every heartbeat, my endless love? 💖
 </h2>
 <button onclick="celebrate()" style="background:#ff4da6;color:white;">Yes ❤️</button>
 <button onclick="moveButton(this)" style="background:gray;color:white;">No 🙈</button>
 </div>
 
-<!-- BIG LOVE -->
 <div id="bigLove">
-<div id="mainLove">✨ I Love You Dhara ❤️ ✨</div>
-<div id="valentineText">Happy Valentine’s Day ❤️🌹</div>
-<div id="signature">Forever Yours – Ashok ❤️</div>
+<h1>✨ I Love You Dhara ❤️ ✨</h1>
+<h3>Happy Valentine’s Day ❤️🌹</h3>
+<h4>Forever Yours – Ashok ❤️</h4>
 </div>
 
 <div id="fadeBlack"></div>
 
-<!-- TYPING SCREEN -->
 <div id="finalInputScreen">
-<h3>Before we relive our memories ❤️</h3>
-<p style="color:#ff99cc;">
-Type exactly:
-</p>
+<h3>Type this exactly:</h3>
 <p style="color:#ff66b2;">
 I love you Ashok, you can see our old memories again
 </p>
@@ -216,26 +176,20 @@ I love you Ashok, you can see our old memories again
 <p id="finalError" style="color:red;"></p>
 </div>
 
-<!-- VIDEO -->
 <div id="videoContainer">
 <video id="loveVideo" playsinline>
 <source src="proposal.mp4" type="video/mp4">
 </video>
 </div>
 
-<!-- END -->
 <div id="theEnd">The End ❤️</div>
-
-<audio id="voice" src="voice.mp3"></audio>
-<audio id="bgMusic" src="romantic.mp3" loop></audio>
-<audio id="heartbeat" src="heartbeat.mp3"></audio>
 
 <script>
 function unlock(){
  if(password.value.toLowerCase()==="shaya"){
   lockScreen.style.display="none";
   intro.style.display="flex";
- }else{
+ } else {
   error.innerText="Wrong password 😜";
  }
 }
@@ -243,7 +197,6 @@ function unlock(){
 function startLove(){
  intro.style.display="none";
  main.style.display="block";
- voice.play();
 }
 
 function moveButton(btn){
@@ -253,20 +206,8 @@ function moveButton(btn){
 }
 
 function celebrate(){
- voice.pause();
- heartbeat.play();
- bgMusic.volume=0;
- bgMusic.play();
-
- let fadeMusic=setInterval(()=>{
-  if(bgMusic.volume<0.6) bgMusic.volume+=0.05;
-  else clearInterval(fadeMusic);
- },200);
-
+ main.style.display="none";
  bigLove.style.display="flex";
-
- setTimeout(()=>valentineText.classList.add("show"),2000);
- setTimeout(()=>signature.classList.add("show"),3500);
 
  let roses=setInterval(()=>{
   const r=document.createElement("div");
@@ -280,19 +221,19 @@ function celebrate(){
 
  setTimeout(()=>{
   clearInterval(roses);
-  heartbeat.pause();
-  fadeBlack.classList.add("show");
+  bigLove.style.display="none";
+  fadeBlack.style.display="block";
+
   setTimeout(()=>{
-   bigLove.style.display="none";
    finalInputScreen.style.display="flex";
-  },2000);
- },6000);
+  },1500);
+
+ },5000);
 }
 
 function checkLoveMessage(){
  const correct="i love you ashok, you can see our old memories again";
- const user=loveConfirmInput.value.toLowerCase().trim();
- if(user===correct){
+ if(loveConfirmInput.value.toLowerCase().trim()===correct){
   finalInputScreen.style.display="none";
   videoContainer.style.display="block";
   loveVideo.play();
@@ -300,7 +241,7 @@ function checkLoveMessage(){
    videoContainer.style.display="none";
    theEnd.style.display="flex";
   };
- }else{
+ } else {
   finalError.innerText="Type it exactly ❤️";
  }
 }
