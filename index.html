@@ -203,11 +203,11 @@ Enter Secret Password ❤️
 <!-- END -->
 <div id="theEnd">The End ❤️</div>
 
-<!-- AUDIO -->
+<!-- VOICE -->
 <audio id="voice" src="voice.mp3"></audio>
-<audio id="heartbeat" src="heartbeat.mp3" loop></audio>
 
 <script>
+
 function unlock(){
  if(password.value.toLowerCase()==="shaya"){
   lockScreen.style.display="none";
@@ -230,7 +230,6 @@ function moveButton(btn){
 }
 
 function celebrate(){
- voice.pause();
  main.style.display="none";
  bigLove.style.display="flex";
 
@@ -251,7 +250,6 @@ function celebrate(){
 
   setTimeout(()=>{
    kissScreen.style.display="flex";
-   heartbeat.play();
    revealBtn.style.display="inline-block";
   },1500);
 
@@ -282,7 +280,11 @@ function checkPassword(){
  const user=document.getElementById("finalPassword").value.toLowerCase().trim();
 
  if(user===correct){
-  heartbeat.pause();
+
+  /* STOP VOICE ONLY NOW */
+  voice.pause();
+  voice.currentTime = 0;
+
   kissScreen.style.display="none";
   videoContainer.style.display="block";
   loveVideo.play();
@@ -296,6 +298,7 @@ function checkPassword(){
   passError.innerText="Wrong password 😘 Try again.";
  }
 }
+
 </script>
 
 </body>
