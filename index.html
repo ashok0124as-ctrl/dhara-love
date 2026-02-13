@@ -23,18 +23,16 @@ body{
   z-index:0;
 }
 
-/* Fullscreen screens */
+/* FULL CENTER SYSTEM */
 .screen{
   position:fixed;
   inset:0;
   display:flex;
   justify-content:center;
   align-items:center;
-  flex-direction:column;
   opacity:0;
   transition:opacity 1s ease;
   z-index:1;
-  text-align:center;
 }
 
 .screen.active{
@@ -45,32 +43,62 @@ body{
   pointer-events:none;
 }
 
-input{
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  margin-top:15px;
+/* Center content wrapper */
+.center-content{
+  width:100%;
+  max-width:1000px;
+  padding:40px;
   text-align:center;
-  width:260px;
 }
 
-button{
-  padding:12px 25px;
-  margin:15px;
+/* Spacing */
+h1,h2,h3,h4,p{
+  margin:18px 0;
+}
+
+/* Main Love Heading */
+.main-love{
+  font-size:54px;
+}
+
+/* Bigger Valentine Text */
+.big-valentine{
+  font-size:38px;
+  font-weight:bold;
+}
+
+/* Inputs */
+input{
+  padding:14px;
   border:none;
-  border-radius:25px;
+  border-radius:8px;
+  margin-top:20px;
+  text-align:center;
+  width:320px;
+  font-size:16px;
+}
+
+/* Buttons */
+button{
+  padding:14px 30px;
+  margin:20px 10px;
+  border:none;
+  border-radius:30px;
   cursor:pointer;
   font-size:16px;
   background:#ff4da6;
   color:white;
 }
 
+/* Image */
 img{
-  width:350px;
+  width:400px;
   border-radius:20px;
-  margin-top:20px;
+  margin:20px auto;
+  display:block;
 }
 
+/* Glow */
 .glow{
   animation:glowPulse 2s infinite alternate;
 }
@@ -80,10 +108,10 @@ img{
   to{ text-shadow:0 0 30px #ff1a75; }
 }
 
-/* Kiss detected animation */
+/* Kiss detected */
 #kissDetectedText{
-  margin-top:20px;
   font-size:24px;
+  margin-top:20px;
   opacity:0;
   transition:0.6s;
 }
@@ -132,7 +160,7 @@ video{
   right:20px;
   font-size:14px;
   color:#ff99cc;
-  opacity:0.7;
+  opacity:0.8;
   z-index:2;
 }
 </style>
@@ -146,64 +174,74 @@ video{
 
 <!-- LOCK -->
 <div id="lockScreen" class="screen active">
-<h2 class="glow">Enter Our Princess Name 👶💕</h2>
-<input type="password" id="password">
-<button onclick="unlock()">Unlock ❤️</button>
-<p id="error" style="color:red;"></p>
+  <div class="center-content">
+    <h2 class="glow">Enter Our Princess Name 👶💕</h2>
+    <input type="password" id="password">
+    <button onclick="unlock()">Unlock ❤️</button>
+    <p id="error" style="color:red;"></p>
+  </div>
 </div>
 
 <!-- INTRO -->
 <div id="intro" class="screen">
-<h2 class="glow" onclick="startLove()">❤️ Click to Begin Our Love Story ❤️</h2>
+  <div class="center-content">
+    <h2 class="glow" onclick="startLove()">❤️ Click to Begin Our Love Story ❤️</h2>
+  </div>
 </div>
 
 <!-- MAIN -->
 <div id="main" class="screen">
-<img src="family.jpg">
-<h2>Will you be my forever Valentine, my always, my every heartbeat, my endless love? 💖</h2>
-<button onclick="celebrate()">Yes ❤️</button>
-<button onclick="moveButton(this)" style="background:gray;">No 🙈</button>
+  <div class="center-content">
+    <img src="family.jpg">
+    <h2>Will you be my forever Valentine, my always, my every heartbeat, my endless love? 💖</h2>
+    <button onclick="celebrate()">Yes ❤️</button>
+    <button onclick="moveButton(this)" style="background:gray;">No 🙈</button>
+  </div>
 </div>
 
 <!-- BIG LOVE -->
 <div id="bigLove" class="screen">
-<h1 class="glow">✨ I Love You Dhara ❤️ ✨</h1>
-<h3>Happy Valentine’s Day ❤️🌹</h3>
-<h4>Forever Yours – Ashok ❤️</h4>
+  <div class="center-content">
+    <h1 class="glow main-love">✨ I Love You Dhara ❤️ ✨</h1>
+    <h2 class="big-valentine">Happy Valentine’s Day ❤️🌹</h2>
+    <h3>Forever Yours – Ashok ❤️</h3>
+  </div>
 </div>
 
-<!-- KISS SCREEN -->
+<!-- KISS -->
 <div id="kissScreen" class="screen">
-<h2 class="glow">
-Say “Love you Ashok” and seal it with a sweet French kiss… 💋❤️
-</h2>
+  <div class="center-content">
+    <h2 class="glow">
+      Say “Love you Ashok” and seal it with a sweet French kiss… 💋❤️
+    </h2>
 
-<p style="margin-top:10px;font-size:18px;">
-Then your lovable <b>Hubby Chubby</b> will reveal the secret password 😘
-</p>
+    <p>Then your lovable <b>Hubby Chubby</b> will reveal the secret password 😘</p>
 
-<button onclick="kissDetected()">I Did It ❤️</button>
+    <button onclick="kissDetected()">I Did It ❤️</button>
 
-<div id="kissDetectedText">💋 Kiss Detected ❤️</div>
+    <div id="kissDetectedText">💋 Kiss Detected ❤️</div>
 
-<div id="passwordBox" style="display:none;">
-<input type="password" id="finalPassword" placeholder="Enter Secret Password">
-<button onclick="checkPassword()">Unlock ❤️</button>
-<p id="passError" style="color:red;"></p>
-</div>
+    <div id="passwordBox" style="display:none;">
+      <input type="password" id="finalPassword" placeholder="Enter Secret Password">
+      <button onclick="checkPassword()">Unlock ❤️</button>
+      <p id="passError" style="color:red;"></p>
+    </div>
+  </div>
 </div>
 
 <!-- VIDEO -->
 <div id="videoContainer" class="screen">
-<video id="loveVideo">
-<source src="proposal.mp4" type="video/mp4">
-</video>
+  <video id="loveVideo">
+    <source src="proposal.mp4" type="video/mp4">
+  </video>
 </div>
 
 <!-- END -->
 <div id="theEnd" class="screen">
-<h1 class="glow">The End ❤️</h1>
-<button onclick="replayLove()">Replay ❤️</button>
+  <div class="center-content">
+    <h1 class="glow main-love">The End ❤️</h1>
+    <button onclick="replayLove()">Replay ❤️</button>
+  </div>
 </div>
 
 <div id="fullscreenHint">Press <b>F</b> for Full Love Mode ❤️</div>
@@ -222,7 +260,7 @@ for(let i=0;i<40;i++){
   document.body.appendChild(p);
 }
 
-/* Screen switch */
+/* Screen control */
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -231,7 +269,7 @@ function show(id){
 function unlock(){
   if(password.value.toLowerCase()==="shaya"){
     show("intro");
-  }else{
+  } else {
     error.innerText="Wrong password 😜";
   }
 }
@@ -252,7 +290,6 @@ function celebrate(){
   setTimeout(()=>show("kissScreen"),4000);
 }
 
-/* Kiss animation */
 function kissDetected(){
   document.getElementById("kissDetectedText").classList.add("show");
   setTimeout(()=>{
@@ -260,12 +297,11 @@ function kissDetected(){
   },1500);
 }
 
-/* Fade voice */
 function fadeOutVoice(){
   let fade=setInterval(()=>{
     if(voice.volume>0.05){
       voice.volume-=0.05;
-    }else{
+    } else {
       clearInterval(fade);
       voice.pause();
       voice.volume=1;
@@ -283,7 +319,7 @@ function checkPassword(){
       document.querySelectorAll(".letterbox").forEach(b=>b.style.display="none");
       show("theEnd");
     };
-  }else{
+  } else {
     passError.innerText="Wrong password 😘 Try again.";
   }
 }
@@ -299,7 +335,7 @@ document.addEventListener("keydown", function(e){
   if(e.key.toLowerCase()==="f"){
     if(!document.fullscreenElement){
       document.documentElement.requestFullscreen();
-    }else{
+    } else {
       document.exitFullscreen();
     }
   }
